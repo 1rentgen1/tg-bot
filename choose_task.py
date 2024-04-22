@@ -15,6 +15,7 @@ Send /start to initiate the conversation.
 Press Ctrl-C on the command line to stop the bot.
 """
 import logging
+import types
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
@@ -24,6 +25,11 @@ from telegram.ext import (
     ContextTypes,
     ConversationHandler,
 )
+import telebot
+from telebot import types
+from config import BOT_TOKEN
+
+bot = telebot.TeleBot(BOT_TOKEN)
 
 # Enable logging
 logging.basicConfig(
@@ -37,9 +43,9 @@ logger = logging.getLogger(__name__)
 # Stages
 START_ROUTES, END_ROUTES = range(2)
 # Callback data
-(BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, SEVEN, EIGHT, NINE, TEN, ELEVEN,
- TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, SIXTEEN, SEVENTEEN, EIGHTEEN, NINETEEN,
- TWENTY, TWENTYONE, TWENTYTWO, TWENTYTHREE, TWENTYFOUR, TWENTYFIVE, END) = (
+(BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T, THIRD_T, FOURTH_T, FIFTH_T,
+ SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T, ELEVENTH_T, TWELFTH_T, THIRTEENTH_T,
+ FOURTEENTH_T, FIFTEENTH_T, SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINTEENTH_T, END) = (
     range(26))
 
 
@@ -119,11 +125,11 @@ async def first_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("1", callback_data=str(SEVEN)),
-            InlineKeyboardButton("2", callback_data=str(EIGHT)),
-            InlineKeyboardButton("3", callback_data=str(NINE)),
-            InlineKeyboardButton("4", callback_data=str(TEN)),
-            InlineKeyboardButton("5", callback_data=str(ELEVEN)),
+            InlineKeyboardButton("1", callback_data=str(FIRST_T)),
+            InlineKeyboardButton("2", callback_data=str(SECOND_T)),
+            InlineKeyboardButton("3", callback_data=str(THIRD_T)),
+            InlineKeyboardButton("4", callback_data=str(FOURTH_T)),
+            InlineKeyboardButton("5", callback_data=str(FIFTH_T)),
         ],
         [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
@@ -140,10 +146,9 @@ async def second_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("6", callback_data=str(TWELVE)),
-            InlineKeyboardButton("7", callback_data=str(THIRTEEN)),
-            InlineKeyboardButton("8", callback_data=str(FOURTEEN)),
-            # InlineKeyboardButton("Назад", callback_data=str(BACK)),
+            InlineKeyboardButton("6", callback_data=str(SIXTH_T)),
+            InlineKeyboardButton("7", callback_data=str(SEVENTH_T)),
+            InlineKeyboardButton("8", callback_data=str(EIGHTH_T)),
         ],
         [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
@@ -160,12 +165,12 @@ async def third_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("9", callback_data=str(FIFTEEN)),
-            InlineKeyboardButton("10", callback_data=str(SIXTEEN)),
-            InlineKeyboardButton("11", callback_data=str(SEVENTEEN)),
-            InlineKeyboardButton("12", callback_data=str(EIGHTEEN)),
-            InlineKeyboardButton("Назад", callback_data=str(BACK)),
-        ]
+            InlineKeyboardButton("9", callback_data=str(NINTH_T)),
+            InlineKeyboardButton("10", callback_data=str(TENTH_T)),
+            InlineKeyboardButton("11", callback_data=str(ELEVENTH_T)),
+            InlineKeyboardButton("12", callback_data=str(TWELFTH_T)),
+        ],
+        [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
@@ -180,12 +185,12 @@ async def fourth_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("13", callback_data=str(NINETEEN)),
-            InlineKeyboardButton("14", callback_data=str(TWENTY)),
-            InlineKeyboardButton("15", callback_data=str(TWENTYONE)),
-            InlineKeyboardButton("16", callback_data=str(TWENTYTWO)),
-            InlineKeyboardButton("Назад", callback_data=str(BACK)),
-        ]
+            InlineKeyboardButton("13", callback_data=str(THIRTEENTH_T)),
+            InlineKeyboardButton("14", callback_data=str(FOURTEENTH_T)),
+            InlineKeyboardButton("15", callback_data=str(FIFTEENTH_T)),
+            InlineKeyboardButton("16", callback_data=str(SIXTEENTH_T)),
+        ],
+        [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
@@ -200,17 +205,38 @@ async def sixth_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("17", callback_data=str(TWENTYTHREE)),
-            InlineKeyboardButton("18", callback_data=str(TWENTYFOUR)),
-            InlineKeyboardButton("19", callback_data=str(TWENTYFIVE)),
-            InlineKeyboardButton("Назад", callback_data=str(BACK)),
-        ]
+            InlineKeyboardButton("17", callback_data=str(SEVENTEENTH_T)),
+            InlineKeyboardButton("18", callback_data=str(EIGHTEENTH_T)),
+            InlineKeyboardButton("19", callback_data=str(NINTEENTH_T)),
+        ],
+        [InlineKeyboardButton("Назад", callback_data=str(BACK))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
         text="Шестой комплект, выберите задание", reply_markup=reply_markup
     )
     return END_ROUTES
+
+
+async def first_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    await update.message.reply_text('>')
+    return END_ROUTES
+# async def first_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+#     """Show new choice of buttons"""
+#     # query = update.callback_query
+#     # await query.answer()
+#     #
+#     # await query.edit_message_text(text="Шестой комплект, выберите задание")
+#     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#     btn1 = types.KeyboardButton("🤓 Экспериментальное задание №17")
+#     btn2 = types.KeyboardButton("📖 Ресурсы для подготовки")
+#     btn3 = types.KeyboardButton("✍️ О проекте")
+#     markup.add(btn1, btn2, btn3)
+#     bot.send_message(message.chat.id,
+#                      text="Привет, {0.first_name}! "
+#                           "Я бот для подготовки к ОГЭ по физике".format(
+#                          message.from_user), reply_markup=markup)
+#     return END_ROUTES
 
 
 async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -243,6 +269,7 @@ def main() -> None:
                 CallbackQueryHandler(third_set, pattern="^" + str(THIRD_S) + "$"),
                 CallbackQueryHandler(fourth_set, pattern="^" + str(FOURTH_S) + "$"),
                 CallbackQueryHandler(sixth_set, pattern="^" + str(FIFTH_S) + "$"),
+                CallbackQueryHandler(first_task, pattern="^" + str(FIRST_T) + "$"),
             ],
             END_ROUTES: [
                 CallbackQueryHandler(start_over, pattern="^" + str(BACK) + "$"),
