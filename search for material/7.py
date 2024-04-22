@@ -19,7 +19,7 @@ def unknown(update: Update, context: CallbackContext) -> None:
 
 def main():
     # Токен вашего бота от BotFather
-    updater = Updater("5550694022:AAFlilrQkeRHCkA6CMRalFx5YK6YOa5-ueo")
+    updater = Updater("TOKEN")
 
     # Получаем диспетчер для регистрации обработчиков
     dp = updater.dispatcher

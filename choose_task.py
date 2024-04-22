@@ -372,7 +372,7 @@ def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(
-        "5550694022:AAFlilrQkeRHCkA6CMRalFx5YK6YOa5-ueo").build()
+        "TOKEN").build()
 
     # Setup conversation handler with the states FIRST and SECOND
     # Use the pattern parameter to pass CallbackQueries with specific

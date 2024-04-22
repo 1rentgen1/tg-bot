@@ -2,7 +2,7 @@ import types
 from telebot import types
 import telebot
 
-bot = telebot.TeleBot("5550694022:AAFlilrQkeRHCkA6CMRalFx5YK6YOa5-ueo")
+bot = telebot.TeleBot("TOKEN")
 
 
 @bot.message_handler(content_types=['text', 'document', 'audio'])
