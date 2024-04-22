@@ -37,10 +37,10 @@ logger = logging.getLogger(__name__)
 # Stages
 START_ROUTES, END_ROUTES = range(2)
 # Callback data
-(BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, SEVEN, EIGHT, NINE, TEN, ELEVEN,
+(BACK, FIRST, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, ELEVEN,
  TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, SIXTEEN, SEVENTEEN, EIGHTEEN, NINETEEN,
- TWENTY, TWENTYONE, TWENTYTWO, TWENTYTHREE, TWENTYFOUR, TWENTYFIVE, END) = (
-    range(26))
+ TWENTY, TWENTYONE, TWENTYTWO, TWENTYTHREE, TWENTYFOUR, TWENTYFIVE) = (
+    range(25))
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -54,11 +54,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # a list (hence `[[...]]`).
     keyboard = [
         [
-            InlineKeyboardButton("1", callback_data=str(FIRST_S)),
-            InlineKeyboardButton("2", callback_data=str(SECOND_S)),
-            InlineKeyboardButton("3", callback_data=str(THIRD_S)),
-            InlineKeyboardButton("4", callback_data=str(FOURTH_S)),
-            InlineKeyboardButton("6", callback_data=str(FIFTH_S)),
+            InlineKeyboardButton("1", callback_data=str(FIRST)),
+            InlineKeyboardButton("2", callback_data=str(THREE)),
+            InlineKeyboardButton("3", callback_data=str(FOUR)),
+            InlineKeyboardButton("4", callback_data=str(FIVE)),
+            InlineKeyboardButton("6", callback_data=str(SIX)),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -78,11 +78,11 @@ async def start_over(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await query.answer()
     keyboard = [
         [
-            InlineKeyboardButton("1", callback_data=str(FIRST_S)),
-            InlineKeyboardButton("2", callback_data=str(SECOND_S)),
-            InlineKeyboardButton("3", callback_data=str(THIRD_S)),
-            InlineKeyboardButton("4", callback_data=str(FOURTH_S)),
-            InlineKeyboardButton("6", callback_data=str(FIFTH_S)),
+            InlineKeyboardButton("1", callback_data=str(FIRST)),
+            InlineKeyboardButton("2", callback_data=str(THREE)),
+            InlineKeyboardButton("3", callback_data=str(FOUR)),
+            InlineKeyboardButton("4", callback_data=str(FIVE)),
+            InlineKeyboardButton("6", callback_data=str(SIX)),
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
@@ -124,8 +124,8 @@ async def first_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             InlineKeyboardButton("3", callback_data=str(NINE)),
             InlineKeyboardButton("4", callback_data=str(TEN)),
             InlineKeyboardButton("5", callback_data=str(ELEVEN)),
-        ],
-        [InlineKeyboardButton("Назад", callback_data=str(BACK))]
+            InlineKeyboardButton("Назад", callback_data=str(BACK)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
@@ -143,9 +143,8 @@ async def second_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             InlineKeyboardButton("6", callback_data=str(TWELVE)),
             InlineKeyboardButton("7", callback_data=str(THIRTEEN)),
             InlineKeyboardButton("8", callback_data=str(FOURTEEN)),
-            # InlineKeyboardButton("Назад", callback_data=str(BACK)),
-        ],
-        [InlineKeyboardButton("Назад", callback_data=str(BACK))]
+            InlineKeyboardButton("Назад", callback_data=str(BACK)),
+        ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await query.edit_message_text(
@@ -238,15 +237,15 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             START_ROUTES: [
-                CallbackQueryHandler(first_set, pattern="^" + str(FIRST_S) + "$"),
-                CallbackQueryHandler(second_set, pattern="^" + str(SECOND_S) + "$"),
-                CallbackQueryHandler(third_set, pattern="^" + str(THIRD_S) + "$"),
-                CallbackQueryHandler(fourth_set, pattern="^" + str(FOURTH_S) + "$"),
-                CallbackQueryHandler(sixth_set, pattern="^" + str(FIFTH_S) + "$"),
+                CallbackQueryHandler(first_set, pattern="^" + str(FIRST) + "$"),
+                CallbackQueryHandler(second_set, pattern="^" + str(THREE) + "$"),
+                CallbackQueryHandler(third_set, pattern="^" + str(FOUR) + "$"),
+                CallbackQueryHandler(fourth_set, pattern="^" + str(FIVE) + "$"),
+                CallbackQueryHandler(sixth_set, pattern="^" + str(SIX) + "$"),
             ],
             END_ROUTES: [
                 CallbackQueryHandler(start_over, pattern="^" + str(BACK) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(END) + "$"),
+                CallbackQueryHandler(end, pattern="^" + str(FIRST) + "$"),
             ],
         },
         fallbacks=[CommandHandler("start", start)],
