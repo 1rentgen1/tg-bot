@@ -1,6 +1,6 @@
 import telebot
 from telebot import types  # для указания типов
-from config import BOT_TOKEN
+from small.config import BOT_TOKEN
 
 bot = telebot.TeleBot(BOT_TOKEN)
 

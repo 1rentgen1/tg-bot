@@ -15,7 +15,6 @@ Send /start to initiate the conversation.
 Press Ctrl-C on the command line to stop the bot.
 """
 import logging
-import types
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
@@ -26,8 +25,7 @@ from telegram.ext import (
     ConversationHandler,
 )
 import telebot
-from telebot import types
-from config import BOT_TOKEN
+from small.config import BOT_TOKEN
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
