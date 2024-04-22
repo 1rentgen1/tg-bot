@@ -33,7 +33,8 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 # Enable logging
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
 )
 # set higher logging level for httpx to avoid all GET and POST requests being logged
 logging.getLogger("httpx").setLevel(logging.WARNING)
@@ -43,9 +44,12 @@ logger = logging.getLogger(__name__)
 # Stages
 START_ROUTES, END_ROUTES = range(2)
 # Callback data
-(BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T, THIRD_T, FOURTH_T, FIFTH_T,
- SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T, ELEVENTH_T, TWELFTH_T, THIRTEENTH_T,
- FOURTEENTH_T, FIFTEENTH_T, SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T, NINTEENTH_T, END) = (
+(BACK, FIRST_S, SECOND_S, THIRD_S, FOURTH_S, FIFTH_S, FIRST_T, SECOND_T,
+ THIRD_T, FOURTH_T, FIFTH_T,
+ SIXTH_T, SEVENTH_T, EIGHTH_T, NINTH_T, TENTH_T, ELEVENTH_T, TWELFTH_T,
+ THIRTEENTH_T,
+ FOURTEENTH_T, FIFTEENTH_T, SIXTEENTH_T, SEVENTEENTH_T, EIGHTEENTH_T,
+ NINTEENTH_T, END) = (
     range(26))
 
 
@@ -75,7 +79,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return START_ROUTES
 
 
-async def start_over(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def start_over(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> int:
     """Prompt same text & keyboard as `start` does but not as new message"""
     # Get CallbackQuery from Update
     query = update.callback_query
@@ -95,28 +100,9 @@ async def start_over(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # Instead of sending a new message, edit the message that
     # originated the CallbackQuery. This gives the feeling of an
     # interactive menu.
-    await query.edit_message_text(text="Выберите комплект", reply_markup=reply_markup)
+    await query.edit_message_text(text="Выберите комплект",
+                                  reply_markup=reply_markup)
     return START_ROUTES
-
-
-# async def first_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-#     """Show new choice of buttons"""
-#     query = update.callback_query
-#     await query.answer()
-#     keyboard = [
-#         [
-#             InlineKeyboardButton("1", callback_data=str(TWO)),
-#             InlineKeyboardButton("2", callback_data=str(THREE)),
-#             InlineKeyboardButton("3", callback_data=str(FOUR)),
-#             InlineKeyboardButton("4", callback_data=str(FIVE)),
-#             InlineKeyboardButton("6", callback_data=str(SIX)),
-#         ]
-#     ]
-#     reply_markup = InlineKeyboardMarkup(keyboard)
-#     await query.edit_message_text(
-#         text="Выберите комплект", reply_markup=reply_markup
-#     )
-#     return START_ROUTES
 
 
 async def first_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -140,7 +126,8 @@ async def first_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return END_ROUTES
 
 
-async def second_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def second_set(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> int:
     """Show new choice of buttons. This is the end point of the conversation."""
     query = update.callback_query
     await query.answer()
@@ -179,7 +166,8 @@ async def third_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return END_ROUTES
 
 
-async def fourth_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def fourth_set(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> int:
     """Show new choice of buttons"""
     query = update.callback_query
     await query.answer()
@@ -218,25 +206,156 @@ async def sixth_set(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return END_ROUTES
 
 
-async def first_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    await update.message.reply_text('>')
-    return END_ROUTES
-# async def first_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-#     """Show new choice of buttons"""
-#     # query = update.callback_query
-#     # await query.answer()
-#     #
-#     # await query.edit_message_text(text="Шестой комплект, выберите задание")
-#     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-#     btn1 = types.KeyboardButton("🤓 Экспериментальное задание №17")
-#     btn2 = types.KeyboardButton("📖 Ресурсы для подготовки")
-#     btn3 = types.KeyboardButton("✍️ О проекте")
-#     markup.add(btn1, btn2, btn3)
-#     bot.send_message(message.chat.id,
-#                      text="Привет, {0.first_name}! "
-#                           "Я бот для подготовки к ОГЭ по физике".format(
-#                          message.from_user), reply_markup=markup)
-#     return END_ROUTES
+async def first_task(update: Update,
+                     context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 1')
+    return ConversationHandler.END
+
+
+async def second_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 2')
+    return ConversationHandler.END
+
+
+async def third_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 3')
+    return ConversationHandler.END
+
+
+async def fourth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 4')
+    return ConversationHandler.END
+
+
+async def fifth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 5')
+    return ConversationHandler.END
+
+
+async def sixth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 6')
+    return ConversationHandler.END
+
+
+async def seventh_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 7')
+    return ConversationHandler.END
+
+
+async def eighth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 8')
+    return ConversationHandler.END
+
+
+async def ninth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 9')
+    return ConversationHandler.END
+
+
+async def tenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 10')
+    return ConversationHandler.END
+
+
+async def eleventh_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 11')
+    return ConversationHandler.END
+
+
+async def twelfth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) -> (
+        int):
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 12')
+    return ConversationHandler.END
+
+
+async def thirteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 13')
+    return ConversationHandler.END
+
+
+async def fourteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 14')
+    return ConversationHandler.END
+
+
+async def fifteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 15')
+    return ConversationHandler.END
+
+
+async def sixteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 16')
+    return ConversationHandler.END
+
+
+async def seventeenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 17')
+    return ConversationHandler.END
+
+
+async def eighteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 18')
+    return ConversationHandler.END
+
+
+async def ninteenth_task(update: Update, context: ContextTypes.DEFAULT_TYPE) \
+        -> int:
+    query = update.callback_query
+    await query.answer()
+    await query.edit_message_text(text='Задача 19')
+    return ConversationHandler.END
 
 
 async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -252,7 +371,8 @@ async def end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 def main() -> None:
     """Run the bot."""
     # Create the Application and pass it your bot's token.
-    application = Application.builder().token("5550694022:AAFlilrQkeRHCkA6CMRalFx5YK6YOa5-ueo").build()
+    application = Application.builder().token(
+        "5550694022:AAFlilrQkeRHCkA6CMRalFx5YK6YOa5-ueo").build()
 
     # Setup conversation handler with the states FIRST and SECOND
     # Use the pattern parameter to pass CallbackQueries with specific
@@ -264,16 +384,58 @@ def main() -> None:
         entry_points=[CommandHandler("start", start)],
         states={
             START_ROUTES: [
-                CallbackQueryHandler(first_set, pattern="^" + str(FIRST_S) + "$"),
-                CallbackQueryHandler(second_set, pattern="^" + str(SECOND_S) + "$"),
-                CallbackQueryHandler(third_set, pattern="^" + str(THIRD_S) + "$"),
-                CallbackQueryHandler(fourth_set, pattern="^" + str(FOURTH_S) + "$"),
-                CallbackQueryHandler(sixth_set, pattern="^" + str(FIFTH_S) + "$"),
-                CallbackQueryHandler(first_task, pattern="^" + str(FIRST_T) + "$"),
+                CallbackQueryHandler(first_set,
+                                     pattern="^" + str(FIRST_S) + "$"),
+                CallbackQueryHandler(second_set,
+                                     pattern="^" + str(SECOND_S) + "$"),
+                CallbackQueryHandler(third_set,
+                                     pattern="^" + str(THIRD_S) + "$"),
+                CallbackQueryHandler(fourth_set,
+                                     pattern="^" + str(FOURTH_S) + "$"),
+                CallbackQueryHandler(sixth_set,
+                                     pattern="^" + str(FIFTH_S) + "$"),
             ],
             END_ROUTES: [
-                CallbackQueryHandler(start_over, pattern="^" + str(BACK) + "$"),
-                CallbackQueryHandler(end, pattern="^" + str(END) + "$"),
+                CallbackQueryHandler(start_over,
+                                     pattern="^" + str(BACK) + "$"),
+                CallbackQueryHandler(first_task,
+                                     pattern="^" + str(FIRST_T) + "$"),
+                CallbackQueryHandler(second_task,
+                                     pattern="^" + str(SECOND_T) + "$"),
+                CallbackQueryHandler(third_task,
+                                     pattern="^" + str(THIRD_T) + "$"),
+                CallbackQueryHandler(fourth_task,
+                                     pattern="^" + str(FOURTH_T) + "$"),
+                CallbackQueryHandler(fifth_task,
+                                     pattern="^" + str(FIFTH_T) + "$"),
+                CallbackQueryHandler(sixth_task,
+                                     pattern="^" + str(SIXTH_T) + "$"),
+                CallbackQueryHandler(seventh_task,
+                                     pattern="^" + str(SEVENTH_T) + "$"),
+                CallbackQueryHandler(eighth_task,
+                                     pattern="^" + str(EIGHTH_T) + "$"),
+                CallbackQueryHandler(ninth_task,
+                                     pattern="^" + str(NINTH_T) + "$"),
+                CallbackQueryHandler(tenth_task,
+                                     pattern="^" + str(TENTH_T) + "$"),
+                CallbackQueryHandler(eleventh_task,
+                                     pattern="^" + str(ELEVENTH_T) + "$"),
+                CallbackQueryHandler(twelfth_task,
+                                     pattern="^" + str(TWELFTH_T) + "$"),
+                CallbackQueryHandler(thirteenth_task,
+                                     pattern="^" + str(THIRTEENTH_T) + "$"),
+                CallbackQueryHandler(fourteenth_task,
+                                     pattern="^" + str(FOURTEENTH_T) + "$"),
+                CallbackQueryHandler(fifteenth_task,
+                                     pattern="^" + str(FIFTEENTH_T) + "$"),
+                CallbackQueryHandler(sixteenth_task,
+                                     pattern="^" + str(SIXTEENTH_T) + "$"),
+                CallbackQueryHandler(seventeenth_task,
+                                     pattern="^" + str(SEVENTEENTH_T) + "$"),
+                CallbackQueryHandler(eighteenth_task,
+                                     pattern="^" + str(EIGHTEENTH_T) + "$"),
+                CallbackQueryHandler(ninteenth_task,
+                                     pattern="^" + str(NINTEENTH_T) + "$"),
             ],
         },
         fallbacks=[CommandHandler("start", start)],
